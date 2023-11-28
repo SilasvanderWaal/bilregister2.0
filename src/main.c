@@ -1,22 +1,25 @@
 #include "../headers/constants.h"
 #include "../headers/functions.h"
 #include "../headers/libraries.h"
+#include "../headers/structures.h"
 
 
-int main(){
+
+int main()
+{
     int chosenNumber;
-    char temp[2];
+    char temp[MAXINPUT];
 
     printMenu();
 
-    fgets(temp, 2, stdin);
+    fgets(temp, MAXINPUT, stdin);
     chosenNumber = atoi(temp);
 
 
     switch (chosenNumber)
     {
     case 1:
-        
+        addvehicle();
         break;
     case 2:
         

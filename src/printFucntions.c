@@ -12,10 +12,12 @@ void printMenu()
     printf("0. Avsluta programmet\n");
 }
 
-void printVechile(){
+void printvehicle()
+{
 
 }
 
-void printAllVechiles(){
+void printAllvehicles()
+{
     
 }

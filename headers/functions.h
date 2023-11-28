@@ -1,8 +1,13 @@
 #pragma once
 
+#include "../headers/constants.h"
+#include "../headers/libraries.h"
+#include "../headers/structures.h"
+
+
 void printMenu();
-void addVechile();
-void removeVechile();
-void sortVechiles();
-void printVechile();
-void printAllVechiles();
+void addvehicle();
+void removevehicle();
+void sortvehicles();
+void printvehicle();
+void printAllvehicles();
