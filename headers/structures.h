@@ -1,26 +1,26 @@
 #pragma once 
 
-#include "../headers/constants.h"
-#include "../headers/functions.h"
-#include "../headers/libraries.h"
+#include "constants.h"
+#include "functions.h"
+#include "libraries.h"
 
-typedef struct person
+struct Person
 {
     char name;
     int age;
-}person;
+};
 
-typedef struct vehicle
+struct Vehicle
 {
-    char type;
-    char brand;
-    char regNumber;
-    struct person owner;
-}vehicle;
+    char type[MAXINPUT];
+    char brand[MAXINPUT];
+    char regNumber[MAXINPUT];
+    struct Person owner;
+};
 
-typedef struct vehicleRegister
+struct VehicleRegister
 {
-    vehicle *vehicleArray[10];
-}vehicleRegister;
+    struct Vehicle *vehicleArray[MAXVEHICLES];
+};
 
 

@@ -4,7 +4,7 @@
 #include "../headers/structures.h"
 
 
-void addvehicle()
+void addvehicle( )
 {
-    
+   
 }

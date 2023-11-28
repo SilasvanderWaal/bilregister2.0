@@ -1,8 +1,8 @@
 #pragma once
 
-#include "../headers/constants.h"
-#include "../headers/libraries.h"
-#include "../headers/structures.h"
+#include "constants.h"
+#include "libraries.h"
+#include "structures.h"
 
 
 void printMenu();
