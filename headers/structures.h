@@ -6,7 +6,7 @@
 
 struct Person
 {
-    char name;
+    char name[MAXINPUT];
     int age;
 };
 
@@ -17,10 +17,4 @@ struct Vehicle
     char regNumber[MAXINPUT];
     struct Person owner;
 };
-
-struct VehicleRegister
-{
-    struct Vehicle *vehicleArray[MAXVEHICLES];
-};
-
 
