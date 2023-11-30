@@ -19,5 +19,16 @@ void printvehicle()
 
 void printAllvehicles()
 {
-    
+    FILE* vregister;
+    struct Vehicle read_car;
+
+    //Opening our safefile
+    vregister = fopen("vregister.txt", "ab+");
+
+    //Set the pointer to the beginning of the file
+    rewind(vregister);
+
+    fread(&read_car, sizeof(struct Vehicle), 1, vregister);
+
+    printf("%s %s %s %s %d\n", read_car.brand,  read_car.type, read_car.owner.name, read_car.regNumber, read_car.owner.age);
 }

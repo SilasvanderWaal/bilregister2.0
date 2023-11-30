@@ -8,6 +8,9 @@ void addvehicle()
 {
     char typeIn[MAXINPUT], brandIn[MAXINPUT], regNumberIn[MAXINPUT], ownerIn[MAXINPUT], nameIn[MAXINPUT], temp[MAXINPUT];
     int ageIn, index = 0;;
+
+    FILE* vregister;
+
     
     //Getting the input from the user.
     printf("What type of car would you like to register?\n");
@@ -23,17 +26,38 @@ void addvehicle()
     ageIn = atoi(temp);
 
     //Getting our structure.
-    struct Vehicle *carArray;
+    struct Vehicle *car;
 
     //Creating a array in the heap memory.
-    carArray = malloc(MAXVEHICLES * sizeof(struct Vehicle));
+    car = malloc(sizeof(struct Vehicle));
     
     //Filling the [index] structure with the data from the user.
-    strcpy(carArray[index].type, typeIn);
-    strcpy(carArray[index].brand, brandIn);
-    strcpy(carArray[index].regNumber, regNumberIn);
-    strcpy(carArray[index].owner.name, ownerIn);
-    carArray[index].owner.age = ageIn;
+    strcpy(car->type, typeIn);
+    strcpy(car->brand, brandIn);
+    strcpy(car->regNumber, regNumberIn);
+    strcpy(car->owner.name, ownerIn);
+    car->owner.age = ageIn;
 
-    //free(carArray)? Will remove our array, but not free the space will cause memory leaks.
+    //Accessing the register textfile
+    vregister = fopen("vregister.txt", "a+");
+
+    if (vregister == NULL)
+    {
+        printf("Filen öppnades inte, programmet kommer att stängas ner nu");
+        exit;
+    }else
+    {
+        printf("Filen öppnades\n");
+    }
+    
+    //Prints the members of our vechile strucutre into the binary file 
+    if(fwrite(car, sizeof(struct Vehicle), 1, vregister) == 0){
+        printf("Data has not been stored");
+    }else{
+        printf("Data has been stored\n");
+    }
+    
+    //Closes the text file and frees up the allocated space in the heap
+    fclose(vregister);
+    free(car);
 }

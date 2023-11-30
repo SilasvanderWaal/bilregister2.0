@@ -22,7 +22,7 @@ int main()
         addvehicle();
         break;
     case 2:
-        
+         
         break;
     case 3:
         
@@ -31,7 +31,7 @@ int main()
         
         break;
     case 5:
-        
+        printAllvehicles();
         break;
     case 0:
         return 0;
