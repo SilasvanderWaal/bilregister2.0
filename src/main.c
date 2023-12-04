@@ -22,7 +22,7 @@ int main()
         addvehicle();
         break;
     case 2:
-         
+         removevehicle();
         break;
     case 3:
         

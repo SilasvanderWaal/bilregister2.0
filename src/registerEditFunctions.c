@@ -61,3 +61,21 @@ void addvehicle()
     fclose(vregister);
     free(car);
 }
+
+void removevehicle(){
+    FILE* vregister;
+
+    struct Vehicle VehicleArray[MAXVEHICLES];
+    char buff[MAXINPUT];
+    int removeIndex;
+
+    vregister = fopen("vregister.txt", "r+");
+
+   fread(VehicleArray, sizeof(struct Vehicle), MAXVEHICLES, vregister);
+
+    printf("Which vehicle would you like to remove?");
+    fgets(buff, MAXINPUT, stdin);
+    removeIndex = atoi(buff);
+   
+    fclose(vregister);
+}

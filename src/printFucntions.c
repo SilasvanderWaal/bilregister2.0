@@ -20,15 +20,24 @@ void printvehicle()
 void printAllvehicles()
 {
     FILE* vregister;
-    struct Vehicle read_car;
 
-    //Opening our safefile
-    vregister = fopen("vregister.txt", "ab+");
+    long int size;
 
-    //Set the pointer to the beginning of the file
-    rewind(vregister);
+    struct Vehicle VehicleArray[MAXVEHICLES];
 
-    fread(&read_car, sizeof(struct Vehicle), 1, vregister);
+    vregister = fopen("vregister.txt", "r+");
 
-    printf("%s %s %s %s %d\n", read_car.brand,  read_car.type, read_car.owner.name, read_car.regNumber, read_car.owner.age);
+
+   fread(VehicleArray, sizeof(struct Vehicle), MAXVEHICLES, vregister);
+
+    fseek( vregister, 0, SEEK_END);
+    size = ftell(vregister);
+
+
+   for (int i; i < size; i += sizeof(struct Vehicle))
+   {
+        printf("%s %s %s %s %d\n", VehicleArray[i / sizeof(struct Vehicle)].brand,  VehicleArray[i / sizeof(struct Vehicle)].type, VehicleArray[i / sizeof(struct Vehicle)].owner.name, VehicleArray[i / sizeof(struct Vehicle)].regNumber, VehicleArray[i / sizeof(struct Vehicle)].owner.age);
+   }
+   
+    fclose(vregister);
 }
