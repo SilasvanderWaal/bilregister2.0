@@ -25,15 +25,17 @@ void printAllvehicles()
 
     struct Vehicle VehicleArray[MAXVEHICLES];
 
+    //Opening the register file
     vregister = fopen("vregister.txt", "r+");
 
-
+    //Read in the data that is stored in the register file, put it in a struct.
    fread(VehicleArray, sizeof(struct Vehicle), MAXVEHICLES, vregister);
 
+    //Find the ending of the size of the register file data 
     fseek( vregister, 0, SEEK_END);
     size = ftell(vregister);
 
-
+    //Print all the vehicles data
    for (int i; i < size; i += sizeof(struct Vehicle))
    {
         printf("%s %s %s %s %d\n", VehicleArray[i / sizeof(struct Vehicle)].brand,  VehicleArray[i / sizeof(struct Vehicle)].type, VehicleArray[i / sizeof(struct Vehicle)].owner.name, VehicleArray[i / sizeof(struct Vehicle)].regNumber, VehicleArray[i / sizeof(struct Vehicle)].owner.age);
