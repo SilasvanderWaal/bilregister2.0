@@ -4,14 +4,11 @@
 #include "../headers/structures.h"
 
 
-void addvehicle()
+void addvehicle(struct vregister *vregister)
 {
     char typeIn[MAXINPUT], brandIn[MAXINPUT], regNumberIn[MAXINPUT], ownerIn[MAXINPUT], nameIn[MAXINPUT], temp[MAXINPUT];
-    int ageIn, index = 0;;
+    int ageIn, index = 0;
 
-    FILE* vregister;
-
-    
     //Getting the input from the user.
     printf("What type of car would you like to register?\n");
     fgets(typeIn, MAXINPUT, stdin);
@@ -25,57 +22,70 @@ void addvehicle()
     fgets(temp, MAXINPUT, stdin);
     ageIn = atoi(temp);
 
-    //Getting our structure.
-    struct Vehicle *car;
-
-    //Creating a array in the heap memory.
-    car = malloc(sizeof(struct Vehicle));
-    
-    //Filling the [index] structure with the data from the user.
-    strcpy(car->type, typeIn);
-    strcpy(car->brand, brandIn);
-    strcpy(car->regNumber, regNumberIn);
-    strcpy(car->owner.name, ownerIn);
-    car->owner.age = ageIn;
-
-    //Accessing the register textfile
-    vregister = fopen("vregister.txt", "a+");
-
-    if (vregister == NULL)
+    //Find empty spot
+    for (index = 0; index < MAXVEHICLES; index++)
     {
-        printf("Filen öppnades inte, programmet kommer att stängas ner nu");
-        exit;
-    }else
+        if(vregister->VehicleArray[index].brand[0] == '\0')
+        {
+            break;
+        }
+    }
+
+    if(index == MAXVEHICLES)
     {
-        printf("Filen öppnades\n");
+        printf("You can not store more than 10 vehicles!\n");
+        return;
     }
     
-    //Prints the members of our vechile strucutre into the binary file 
-    if(fwrite(car, sizeof(struct Vehicle), 1, vregister) == 0){
-        printf("Data has not been stored");
-    }else{
-        printf("Data has been stored\n");
-    }
-    
-    //Closes the text file and frees up the allocated space in the heap
-    fclose(vregister);
-    free(car);
+
+    //Filling the vregister structure with the data from the user.
+    strcpy(vregister->VehicleArray[index].type, typeIn);
+    strcpy(vregister->VehicleArray[index].brand, brandIn);
+    strcpy(vregister->VehicleArray[index].regNumber, regNumberIn);
+    strcpy(vregister->VehicleArray[index].owner.name, ownerIn);
+    vregister->VehicleArray[index].owner.age = ageIn;
+
+    return;
 }
 
-void removevehicle(){
-    FILE* vregister;
+void removevehicle(struct vregister *vregister){
+    int input, index;
+    char temp[MAXINPUT];
 
-    struct Vehicle VehicleArray[MAXVEHICLES];
-    char buff[MAXINPUT];
-    int removeIndex;
+    index = findIndex(vregister);
 
-    vregister = fopen("vregister.txt", "r+");
+    if(index == 0){
+        printf("You can not remove a vehicle from an empty list");
+        return;
+    }
 
-   fread(VehicleArray, sizeof(struct Vehicle), MAXVEHICLES, vregister);
+    printf("What Vehicle would you like to remove? You can choose between 0 - %d", index - 1);
+    fgets(temp, MAXINPUT, stdin);
+    input = atoi(temp);
 
-    printf("Which vehicle would you like to remove?");
-    fgets(buff, MAXINPUT, stdin);
-    removeIndex = atoi(buff);
-   
-    fclose(vregister);
+    if(input < 0 || input > (index -1))
+    {
+        printf("That is not a valid input!");
+        return;
+    }
+
+    strcpy(vregister->VehicleArray[input].type, "\0");
+    strcpy(vregister->VehicleArray[input].brand, "\0");
+    strcpy(vregister->VehicleArray[input].regNumber, "\0");
+    strcpy(vregister->VehicleArray[input].owner.name, "\0");
+    vregister->VehicleArray[input].owner.age = 0;
+
+    return;
+}
+
+int findIndex(struct vregister *vregister){
+    for (int index = 0; index < MAXVEHICLES; index++)
+    {
+        if(vregister->VehicleArray[index].brand[0] == '\0')
+        {
+            return index;
+        }
+    }
+
+    return MAXVEHICLES;
 }

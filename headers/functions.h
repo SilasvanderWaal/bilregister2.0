@@ -6,8 +6,9 @@
 
 
 void printMenu();
-void addvehicle();
-void removevehicle();
-void sortvehicles();
-void printvehicle();
-void printAllvehicles();
+void addvehicle(struct vregister *vregister);
+void removevehicle(struct vregister *vregister);
+void sortVehicles(struct vregister *vregister);
+void printvehicle(struct vregister *vregister);
+void printAllvehicles(struct vregister *vregister);
+int findIndex(struct vregister *vregister);

@@ -7,39 +7,56 @@
 
 int main()
 {
-    int chosenNumber;
+    int chosenNumber = 1;
     char temp[MAXINPUT];
+
+    //Creating the array we are going to store our vehicles in
+    struct vregister *vregister;
+    vregister = malloc(MAXVEHICLES * sizeof(struct Vehicle));
+
+    //Removing junk data from the brand member, we do this to find empty spots when adding vehicles.
+    for (int i = 0; i < MAXVEHICLES; i++)
+    {
+        strcpy(vregister->VehicleArray[i].brand, "\0");
+    }
+    
 
     printMenu();
 
-    fgets(temp, MAXINPUT, stdin);
-    chosenNumber = atoi(temp);
-
-
-    switch (chosenNumber)
+    while (chosenNumber != 0)
     {
-    case 1:
-        addvehicle();
-        break;
-    case 2:
-         removevehicle();
-        break;
-    case 3:
-        
-        break;
-    case 4:
-        
-        break;
-    case 5:
-        printAllvehicles();
-        break;
-    case 0:
-        return 0;
-        
-    default:
-        printf("That is not an option");
-        break;
+        fgets(temp, MAXINPUT, stdin);
+        chosenNumber = atoi(temp);
+
+        switch (chosenNumber)
+        {
+        case 1:
+            addvehicle(vregister);
+            break;
+        case 2:
+            removevehicle(vregister);
+            break;
+        case 3:
+            sortVehicles(vregister);
+            break;
+        case 4:
+            printvehicle(vregister);
+            break;
+        case 5:
+            printAllvehicles(vregister);
+            break;
+        case 0:
+            free(vregister);
+            return 0;
+            
+        default:
+            printf("That is not an option");
+            break;
+        }
+
+        printMenu();
     }
+    
 
     return 0;
 }
