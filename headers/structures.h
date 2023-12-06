@@ -18,3 +18,8 @@ struct Vehicle
     struct Person owner;
 };
 
+struct vregister
+{
+    struct Vehicle VehicleArray[MAXVEHICLES];
+};
+

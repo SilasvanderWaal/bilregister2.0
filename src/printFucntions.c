@@ -4,6 +4,7 @@
 
 void printMenu()
 {
+    printf("\n");
     printf("1. Lägg till ett fordon\n");
     printf("2. Ta bort ett fordon\n");
     printf("3. Sortering efter bilmarke\n");
@@ -12,34 +13,41 @@ void printMenu()
     printf("0. Avsluta programmet\n");
 }
 
-void printvehicle()
+void printvehicle(struct vregister *vregister)
 {
+    int index;
+    char temp[MAXINPUT];
+    int input;
 
+    index = findIndex(vregister);
+
+    if(index == 0){
+        printf("There is no vehicle in the register yet, add a vehicle to use this function!");
+    }
+
+    printf("What vehicle would you like to see? You can choose from 0 - %d\n", index - 1);
+
+    fgets(temp, MAXINPUT, stdin);
+    input = atoi(temp);
+
+    if(input < 0 || input > index - 1){
+        printf("That is not a valid input!");
+        return;
+    }
+
+    printf("\nCar %d\nMärke: %sTyp: %sRegistreringsnummer: %sÄgare: %sÄgarens ålder: %d\n",input ,  vregister->VehicleArray[input].brand,  vregister->VehicleArray[input].type, vregister->VehicleArray[input].regNumber, vregister->VehicleArray[input].owner.name, vregister->VehicleArray[input].owner.age);
+
+    return;
 }
 
-void printAllvehicles()
+void printAllvehicles(struct vregister *vregister)
 {
-    FILE* vregister;
-
-    long int size;
-
-    struct Vehicle VehicleArray[MAXVEHICLES];
-
-    //Opening the register file
-    vregister = fopen("vregister.txt", "r+");
-
-    //Read in the data that is stored in the register file, put it in a struct.
-   fread(VehicleArray, sizeof(struct Vehicle), MAXVEHICLES, vregister);
-
-    //Find the ending of the size of the register file data 
-    fseek( vregister, 0, SEEK_END);
-    size = ftell(vregister);
-
+    int index = findIndex(vregister);
     //Print all the vehicles data
-   for (int i; i < size; i += sizeof(struct Vehicle))
-   {
-        printf("%s %s %s %s %d\n", VehicleArray[i / sizeof(struct Vehicle)].brand,  VehicleArray[i / sizeof(struct Vehicle)].type, VehicleArray[i / sizeof(struct Vehicle)].owner.name, VehicleArray[i / sizeof(struct Vehicle)].regNumber, VehicleArray[i / sizeof(struct Vehicle)].owner.age);
-   }
-   
-    fclose(vregister);
+    for (int i = 0; i < index; i++)
+    {
+        printf("\nCar %d\nMärke: %sTyp: %sRegistreringsnummer: %sÄgare: %sÄgarens ålder: %d\n",i ,  vregister->VehicleArray[i].brand,  vregister->VehicleArray[i].type, vregister->VehicleArray[i].regNumber, vregister->VehicleArray[i].owner.name, vregister->VehicleArray[i].owner.age);
+    }
+
+    return;
 }
