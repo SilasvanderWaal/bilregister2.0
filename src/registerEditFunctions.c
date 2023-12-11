@@ -12,14 +12,58 @@ void addvehicle(struct vregister *vregister)
     //Getting the input from the user.
     printf("What type of car would you like to register?\n");
     fgets(typeIn, MAXINPUT, stdin);
+    if(typeIn[strlen(typeIn) - 1] != '\n')
+    {
+        clearStdin();
+        printf("Error! Input is too long!\n");
+        return;
+    }
+
     printf("What is the brand of the car?\n");
     fgets(brandIn, MAXINPUT, stdin);
+    if(brandIn[strlen(brandIn) - 1] != '\n')
+    {
+        clearStdin();
+        printf("Error! Input is too long!\n");
+        return;
+    }
+
     printf("What is the registration number of the car?\n");
     fgets(regNumberIn, MAXINPUT, stdin);
+    if(regNumberIn[strlen(regNumberIn) - 1] != '\n')
+    {
+        clearStdin();
+        printf("Error! Input is too long!\n");
+        return;
+    }
+
     printf("What is the name of the owner?\n");
     fgets(ownerIn, MAXINPUT, stdin);
+    if(ownerIn[strlen(ownerIn) - 1] != '\n')
+    {
+        clearStdin();
+        printf("Error! Input is too long!");
+        return;
+    }
+
     printf("How old is the owner?\n");
     fgets(temp, MAXINPUT, stdin);
+    if(temp[strlen(temp) - 1] != '\n') 
+    {
+        clearStdin();
+        printf("Error! Input is too long!\n");
+        return;
+    }
+
+    for (int i = 0; temp[i] != '\n'; i++)
+    {
+        if(isdigit(temp[i]) == 0)
+        {
+            printf("Your input contains something more than numbers!\n");
+            return;
+        }
+    }
+    
     ageIn = atoi(temp);
 
     //Find empty spot
@@ -55,17 +99,33 @@ void removevehicle(struct vregister *vregister){
     index = findIndex(vregister);
 
     if(index == 0){
-        printf("You can not remove a vehicle from an empty list");
+        printf("You can not remove a vehicle from an empty list\n");
         return;
     }
 
-    printf("What Vehicle would you like to remove? You can choose between 0 - %d", index - 1);
+    printf("What Vehicle would you like to remove? You can choose between 0 - %d\n", index - 1);
     fgets(temp, MAXINPUT, stdin);
+    if(temp[strlen(temp) - 1] != '\n') 
+    {
+        clearStdin();
+        printf("Error! Input is too long!\n");
+        return;
+    }
+
+    for (int i = 0; temp[i] != '\n'; i++)
+    {
+        if(isdigit(temp[i]) == 0)
+        {
+            printf("Your input contains something more than numbers!\n");
+            return;
+        }
+    }
+    
     input = atoi(temp);
 
     if(input < 0 || input > (index -1))
     {
-        printf("That is not a valid input!");
+        printf("That is not a valid input!\n");
         return;
     }
 
@@ -75,6 +135,20 @@ void removevehicle(struct vregister *vregister){
     strcpy(vregister->VehicleArray[input].owner.name, "\0");
     vregister->VehicleArray[input].owner.age = 0;
 
+    for (int i = input + 1;  i < index; i++)
+    {
+        vregister->VehicleArray[i - 1] = vregister->VehicleArray[i];
+
+        if( i +1 ==  index)
+        {
+        strcpy(vregister->VehicleArray[i].type, "\0");
+        strcpy(vregister->VehicleArray[i].brand, "\0");
+        strcpy(vregister->VehicleArray[i].regNumber, "\0");
+        strcpy(vregister->VehicleArray[i].owner.name, "\0");
+        vregister->VehicleArray[i].owner.age = 0;
+        }
+    }
+    
     return;
 }
 
@@ -88,4 +162,10 @@ int findIndex(struct vregister *vregister){
     }
 
     return MAXVEHICLES;
+}
+
+void clearStdin() {
+    int c;
+    // Keep reading characters until a newline or the end of the input
+    while ((c = getchar()) != '\n' && c != EOF);
 }

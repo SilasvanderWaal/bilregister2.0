@@ -22,21 +22,37 @@ void printvehicle(struct vregister *vregister)
     index = findIndex(vregister);
 
     if(index == 0){
-        printf("There is no vehicle in the register yet, add a vehicle to use this function!");
+        printf("There is no vehicle in the register yet, add a vehicle to use this function!\n");
     }
 
     printf("What vehicle would you like to see? You can choose from 0 - %d\n", index - 1);
 
     fgets(temp, MAXINPUT, stdin);
-    input = atoi(temp);
-
-    if(input < 0 || input > index - 1){
-        printf("That is not a valid input!");
+    if(temp[strlen(temp) - 1] != '\n') 
+    {
+        clearStdin();
+        printf("Error! Input is too long!\n");
         return;
     }
 
-    printf("\nCar %d\nMärke: %sTyp: %sRegistreringsnummer: %sÄgare: %sÄgarens ålder: %d\n",input ,  vregister->VehicleArray[input].brand,  vregister->VehicleArray[input].type, vregister->VehicleArray[input].regNumber, vregister->VehicleArray[input].owner.name, vregister->VehicleArray[input].owner.age);
+    for (int i = 0; temp[i] != '\n'; i++)
+    {
+        if(isdigit(temp[i]) == 0)
+        {
+            printf("Your input contains something more than numbers!\n");
+            return;
+        }
+    }
+    
+    input = atoi(temp);
 
+    if(input < 0 || input > index - 1){
+        printf("That is not a valid input!\n");
+        return;
+    }
+    printf("---------------------------------------------------------------------------");
+    printf("\nCar %d\nMärke: %sTyp: %sRegistreringsnummer: %sÄgare: %sÄgarens ålder: %d\n",input ,  vregister->VehicleArray[input].brand,  vregister->VehicleArray[input].type, vregister->VehicleArray[input].regNumber, vregister->VehicleArray[input].owner.name, vregister->VehicleArray[input].owner.age);
+    printf("---------------------------------------------------------------------------");
     return;
 }
 
@@ -44,10 +60,12 @@ void printAllvehicles(struct vregister *vregister)
 {
     int index = findIndex(vregister);
     //Print all the vehicles data
+    printf("---------------------------------------------------------------------------");
     for (int i = 0; i < index; i++)
     {
         printf("\nCar %d\nMärke: %sTyp: %sRegistreringsnummer: %sÄgare: %sÄgarens ålder: %d\n",i ,  vregister->VehicleArray[i].brand,  vregister->VehicleArray[i].type, vregister->VehicleArray[i].regNumber, vregister->VehicleArray[i].owner.name, vregister->VehicleArray[i].owner.age);
     }
+    printf("---------------------------------------------------------------------------");
 
     return;
 }

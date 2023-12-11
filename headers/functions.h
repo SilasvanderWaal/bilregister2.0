@@ -12,3 +12,4 @@ void sortVehicles(struct vregister *vregister);
 void printvehicle(struct vregister *vregister);
 void printAllvehicles(struct vregister *vregister);
 int findIndex(struct vregister *vregister);
+void clearStdin();
