@@ -9,7 +9,7 @@ void addvehicle(struct vregister *vregister)
     char typeIn[MAXINPUT], brandIn[MAXINPUT], regNumberIn[MAXINPUT], ownerIn[MAXINPUT], nameIn[MAXINPUT], temp[MAXINPUT];
     int ageIn, index = 0;
 
-    //Getting the input from the user.
+    //Getting the input from the user and makes sure it is valid, if not the user will be send back to the main menu.
     printf("What type of car would you like to register?\n");
     fgets(typeIn, MAXINPUT, stdin);
     if(typeIn[strlen(typeIn) - 1] != '\n')
@@ -66,7 +66,7 @@ void addvehicle(struct vregister *vregister)
     
     ageIn = atoi(temp);
 
-    //Find empty spot
+    //Find the first empty spot in the array
     for (index = 0; index < MAXVEHICLES; index++)
     {
         if(vregister->VehicleArray[index].brand[0] == '\0')
@@ -75,6 +75,7 @@ void addvehicle(struct vregister *vregister)
         }
     }
 
+    //Makes sure the array is not full, if full the user is send back to the main menu
     if(index == MAXVEHICLES)
     {
         printf("You can not store more than 10 vehicles!\n");
@@ -103,7 +104,7 @@ void removevehicle(struct vregister *vregister){
         return;
     }
 
-    printf("What Vehicle would you like to remove? You can choose between 0 - %d\n", index - 1);
+    printf("What Vehicle would you like to remove? You can choose between 1 - %d\n", index);
     fgets(temp, MAXINPUT, stdin);
     if(temp[strlen(temp) - 1] != '\n') 
     {
@@ -120,24 +121,24 @@ void removevehicle(struct vregister *vregister){
             return;
         }
     }
-    
+
     input = atoi(temp);
 
-    if(input < 0 || input > (index -1))
+    if(input < 1 || input > index)
     {
         printf("That is not a valid input!\n");
         return;
     }
 
-    strcpy(vregister->VehicleArray[input].type, "\0");
-    strcpy(vregister->VehicleArray[input].brand, "\0");
-    strcpy(vregister->VehicleArray[input].regNumber, "\0");
-    strcpy(vregister->VehicleArray[input].owner.name, "\0");
-    vregister->VehicleArray[input].owner.age = 0;
+    strcpy(vregister->VehicleArray[input - 1].type, "\0");
+    strcpy(vregister->VehicleArray[input - 1].brand, "\0");
+    strcpy(vregister->VehicleArray[input - 1].regNumber, "\0");
+    strcpy(vregister->VehicleArray[input - 1].owner.name, "\0");
+    vregister->VehicleArray[input -1].owner.age = 0;
 
-    for (int i = input + 1;  i < index; i++)
+    for (int i = input -1 ;  i < index; i++)
     {
-        vregister->VehicleArray[i - 1] = vregister->VehicleArray[i];
+        vregister->VehicleArray[i] = vregister->VehicleArray[i + 1];
 
         if( i +1 ==  index)
         {

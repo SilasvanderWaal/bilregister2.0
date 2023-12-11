@@ -20,19 +20,22 @@ int main()
     {
         strcpy(vregister->VehicleArray[i].brand, "\0");
     }
-     
+    
+    //Reading in the savefile, if there is none a new will be created
     FILE* vregisterFile = fopen("vregisterFile.txt", "a+");
     fread(vregister->VehicleArray, sizeof(struct Vehicle), MAXVEHICLES, vregisterFile);
     fclose(vregisterFile);
 
     printMenu();
 
+        //Asks the user what function they would like to use, if the input is invalid the steps are repeated
         while (chosenNumber != 0)
         {
             acceptableNumber = true;
                 
             fgets(temp, MAXINPUT, stdin);
 
+            //Checks if the input is valid 
             if(temp[strlen(temp) - 1] != '\n') 
             {
                 clearStdin();
@@ -57,7 +60,7 @@ int main()
                 chosenNumber = atoi(temp);
             }
             
-
+            //Send the user to the function they requested
             switch (chosenNumber)
             {
             case 1:
@@ -79,7 +82,6 @@ int main()
                 vregisterFile = fopen("vregisterFile.txt", "w+");
                 fwrite(vregister->VehicleArray, sizeof(struct Vehicle), MAXVEHICLES, vregisterFile);
                 free(vregister);
-                printf("ss");
                 return 0;
                 
             default:

@@ -9,6 +9,11 @@ void sortVehicles(struct vregister *vregister)
 
     index = findIndex(vregister);
 
+    if (index < 2)
+    {
+        printf("You need a register of atleast 2 vehicles in order to sort!\n");
+    }
+
     for (int i = 0; i < index - 1; i++)
     {
         for (int j = 0; j < index - i - 1; j++) 
