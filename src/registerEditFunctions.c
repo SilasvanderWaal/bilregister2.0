@@ -6,7 +6,12 @@
 
 void addvehicle(struct vregister *vregister)
 {
-    char typeIn[MAXINPUT], brandIn[MAXINPUT], regNumberIn[MAXINPUT], ownerIn[MAXINPUT], nameIn[MAXINPUT], temp[MAXINPUT];
+    char typeIn[MAXINPUT];
+    char brandIn[MAXINPUT];
+    char regNumberIn[MAXINPUT];
+    char ownerIn[MAXINPUT];
+    char nameIn[MAXINPUT];
+    char temp[MAXINPUT];
     int ageIn, index = 0;
 
     //Getting the input from the user and makes sure it is valid, if not the user will be send back to the main menu.
