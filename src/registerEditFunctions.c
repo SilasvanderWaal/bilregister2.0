@@ -97,13 +97,16 @@ void removevehicle(struct vregister *vregister){
     int input, index;
     char temp[MAXINPUT];
 
+    //Finding the next empty spot
     index = findIndex(vregister);
 
+    //Making sure the register is not empty
     if(index == 0){
         printf("You can not remove a vehicle from an empty list\n");
         return;
     }
 
+    //Letting the user choose which vehicle they would like to remove
     printf("What Vehicle would you like to remove? You can choose between 1 - %d\n", index);
     fgets(temp, MAXINPUT, stdin);
     if(temp[strlen(temp) - 1] != '\n') 
@@ -113,6 +116,7 @@ void removevehicle(struct vregister *vregister){
         return;
     }
 
+    //Making sure there input is valid
     for (int i = 0; temp[i] != '\n'; i++)
     {
         if(isdigit(temp[i]) == 0)
@@ -130,29 +134,33 @@ void removevehicle(struct vregister *vregister){
         return;
     }
 
+    //cleaning the vehicle that the user wants to remove
     strcpy(vregister->VehicleArray[input - 1].type, "\0");
     strcpy(vregister->VehicleArray[input - 1].brand, "\0");
     strcpy(vregister->VehicleArray[input - 1].regNumber, "\0");
     strcpy(vregister->VehicleArray[input - 1].owner.name, "\0");
     vregister->VehicleArray[input -1].owner.age = 0;
 
+    //Moving every vehicle that comes after the removed vehicle, one step back
     for (int i = input -1 ;  i < index; i++)
     {
         vregister->VehicleArray[i] = vregister->VehicleArray[i + 1];
 
+        //removing the last vehicles so the string becomes one shorter.
         if( i +1 ==  index)
         {
-        strcpy(vregister->VehicleArray[i].type, "\0");
-        strcpy(vregister->VehicleArray[i].brand, "\0");
-        strcpy(vregister->VehicleArray[i].regNumber, "\0");
-        strcpy(vregister->VehicleArray[i].owner.name, "\0");
-        vregister->VehicleArray[i].owner.age = 0;
+            strcpy(vregister->VehicleArray[i].type, "\0");
+            strcpy(vregister->VehicleArray[i].brand, "\0");
+            strcpy(vregister->VehicleArray[i].regNumber, "\0");
+            strcpy(vregister->VehicleArray[i].owner.name, "\0");
+            vregister->VehicleArray[i].owner.age = 0;
         }
     }
     
     return;
 }
 
+//Function that gives us the first empty spot in the vehicleArray
 int findIndex(struct vregister *vregister){
     for (int index = 0; index < MAXVEHICLES; index++)
     {
@@ -165,8 +173,8 @@ int findIndex(struct vregister *vregister){
     return MAXVEHICLES;
 }
 
+//Function that clears stdin
 void clearStdin() {
     int c;
-    // Keep reading characters until a newline or the end of the input
     while ((c = getchar()) != '\n' && c != EOF);
 }

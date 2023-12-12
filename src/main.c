@@ -28,70 +28,70 @@ int main()
 
     printMenu();
 
-        //Asks the user what function they would like to use, if the input is invalid the steps are repeated
-        while (chosenNumber != 0)
-        {
-            acceptableNumber = true;
-                
-            fgets(temp, MAXINPUT, stdin);
+    //Asks the user what function they would like to use, if the input is invalid the steps are repeated
+    while (chosenNumber != 0)
+    {
+        acceptableNumber = true;
+            
+        fgets(temp, MAXINPUT, stdin);
 
-            //Checks if the input is valid 
-            if(temp[strlen(temp) - 1] != '\n') 
+        //Checks if the input is valid 
+        if(temp[strlen(temp) - 1] != '\n') 
+        {
+            clearStdin();
+            printf("Error! Input is too long!\n");
+            chosenNumber = GOTODEFAULT;
+            acceptableNumber = false;
+        }else
+        {
+            for (int i = 0; temp[i] != '\n'; i++)
             {
-                clearStdin();
-                printf("Error! Input is too long!\n");
-                chosenNumber = GOTODEFAULT;
-                acceptableNumber = false;
-            }else
-            {
-                for (int i = 0; temp[i] != '\n'; i++)
+                if(isdigit(temp[i]) == 0)
                 {
-                    if(isdigit(temp[i]) == 0)
-                    {
-                        printf("Your input contains something more than numbers!\n");
-                        chosenNumber = GOTODEFAULT;
-                        acceptableNumber = false;
-                    }
+                    printf("Your input contains something more than numbers!\n");
+                    chosenNumber = GOTODEFAULT;
+                    acceptableNumber = false;
+                    break;
                 }
             }
+        }
+        
+        if(acceptableNumber == true)
+        {
+            chosenNumber = atoi(temp);
+        }
+        
+        //Send the user to the function they requested
+        switch (chosenNumber)
+        {
+        case 1:
+            addvehicle(vregister);
+            break;
+        case 2:
+            removevehicle(vregister);
+            break;
+        case 3:
+            sortVehicles(vregister);
+            break;
+        case 4:
+            printvehicle(vregister);
+            break;
+        case 5:
+            printAllvehicles(vregister);
+            break;
+        case 0:
+            vregisterFile = fopen("vregisterFile.txt", "w+");
+            fwrite(vregister->VehicleArray, sizeof(struct Vehicle), MAXVEHICLES, vregisterFile);
+            free(vregister);
+            return 0;
             
-            if(acceptableNumber == true)
-            {
-                chosenNumber = atoi(temp);
-            }
-            
-            //Send the user to the function they requested
-            switch (chosenNumber)
-            {
-            case 1:
-                addvehicle(vregister);
-                break;
-            case 2:
-                removevehicle(vregister);
-                break;
-            case 3:
-                sortVehicles(vregister);
-                break;
-            case 4:
-                printvehicle(vregister);
-                break;
-            case 5:
-                printAllvehicles(vregister);
-                break;
-            case 0:
-                vregisterFile = fopen("vregisterFile.txt", "w+");
-                fwrite(vregister->VehicleArray, sizeof(struct Vehicle), MAXVEHICLES, vregisterFile);
-                free(vregister);
-                return 0;
-                
-            default:
-                printf("Please choose a number between 0-5\n");
-                break;
-            }
+        default:
+            printf("Please choose a number between 0-5\n");
+            break;
+        }
 
-            printMenu();
+        printMenu();
     }
-    
 
     return 0;
 }

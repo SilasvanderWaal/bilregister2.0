@@ -4,6 +4,7 @@
 
 void printMenu()
 {
+    //Prints out the main menu
     printf("\n");
     printf("1. Lägg till ett fordon\n");
     printf("2. Ta bort ett fordon\n");
@@ -19,15 +20,19 @@ void printvehicle(struct vregister *vregister)
     char temp[MAXINPUT];
     int input;
 
+    //Using the next free spot to get the length of the array
     index = findIndex(vregister);
 
+    //Making sure we have something to print out 
     if(index == 0){
         printf("There is no vehicle in the register yet, add a vehicle to use this function!\n");
     }
 
+    //Asking the user which car the would like to see
     printf("What vehicle would you like to see? You can choose from 1 - %d\n", index);
-
     fgets(temp, MAXINPUT, stdin);
+
+    //Making sure their input is valid
     if(temp[strlen(temp) - 1] != '\n') 
     {
         clearStdin();
@@ -44,29 +49,36 @@ void printvehicle(struct vregister *vregister)
         }
     }
 
+    //converting the string to a number so we can use it as an int
     input = atoi(temp);
 
+    //Once again, making sure the input is still valid
     if(input < 0 || input > index ){
         printf("That is not a valid input!\n");
         return;
     }
+
+    //printing out the car the user would like to see
     printf("---------------------------------------------------------------------------");
     printf("\nCar %d\nMärke: %sTyp: %sRegistreringsnummer: %sÄgare: %sÄgarens ålder: %d\n",input ,  vregister->VehicleArray[input -1].brand,  vregister->VehicleArray[input -1].type, vregister->VehicleArray[input -1].regNumber, vregister->VehicleArray[input -1].owner.name, vregister->VehicleArray[input -1].owner.age);
     printf("---------------------------------------------------------------------------\n");
+    
     return;
 }
 
 void printAllvehicles(struct vregister *vregister)
 {
+    //Using the next free spot to get the length of the array
     int index = findIndex(vregister);
-    //Print all the vehicles data
-
+   
+    //Cheking so the string is not ampty
     if(index == 0)
     {
         printf("The register is empty, you will need to add a vehicle first!\n");
         return;
     }
 
+    //Printing out the enitre register, one car at the time.
     printf("---------------------------------------------------------------------------");
     for (int i = 0; i < index; i++)
     {
