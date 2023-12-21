@@ -23,19 +23,19 @@ To compile and build the program, execute the command: make build
 
 #### Clean:
 To remove compiled files and clean the project directory, use the command: make clean
+
 ## Usage
 To interact with the program, users can execute the compiled executable resulting from the build process. The executable provides a command-line interface where users can input commands corresponding to the defined functionalities.
-
 Example Usage:
 bash
 Copy code
-# Build the program
+### Build the program
 make build
 
-# Run the program
+### Run the program
 ./build
 
-# Use the program functionalities
+### Use the program functionalities
 1. Add a new vehicle
 2. Delete a vehicle
 3. Sort the register
@@ -44,5 +44,5 @@ make build
 
 Choose by enetering the number for the function
 
-# Clean up (optional)
+### Clean up (optional)
 make clean
